@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3'
 
 </script>
 <template>
   <header class="header">
     <nav class="navbar">
       <ul class="nav-list">
-        <li class="nav-item"><inertia-link href="/">Проекты</inertia-link></li>
-        <li class="nav-item"><inertia-link href="/about">Доски</inertia-link></li>
-        <li class="nav-item"><inertia-link href="/task">Создать</inertia-link></li>
+        <li class="nav-item"><Link href="/projects">Проекты</Link></li>
+        <li class="nav-item"><Link href="/about">Доски</Link></li>
+        <li class="nav-item"><Link href="/task">Создать задачу</Link></li>
       </ul>
     </nav>
   </header>
@@ -15,7 +16,7 @@
 
 <style scoped>
 .header {
-  background-color: #01e2ff; /* Темно-синий фон */
+  background-color: #018dff; /* Темно-синий фон */
   padding: 1rem 2rem; /* Отступы сверху и снизу, слева и справа */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень для эффекта поднятия */
 }

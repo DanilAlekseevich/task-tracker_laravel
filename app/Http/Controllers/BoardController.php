@@ -12,7 +12,7 @@ class BoardController extends Controller
     public function index($projectId)
     {
         $project = Project::findOrFail($projectId);
-        $boards = $project->boards()->get();
+        $boards = $project->boards()->with('columns')->get();
 
         return Inertia::render('Boards/Index', [
             'project' => $project,
