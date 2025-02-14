@@ -7,6 +7,7 @@
                 <TaskInfo class="task-info" :task="task"/>
             </div>
             <TaskComments :comments="task.comments"/>
+            <CommentForm />
         </div>
     </AppLayout>
 </template>
@@ -17,6 +18,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import TaskDescription from '../../Components/Task/Description.vue';
 import TaskInfo from '../../Components/Task/Info.vue';
 import TaskComments from '../../Components/Task/Comments.vue';
+import CommentForm from '../../Components/Task/CommentForm.vue';
 
 interface User {
     id: number;

@@ -20,6 +20,15 @@ class BoardController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        $boards = Board::all();
+
+        return Inertia::render('Boards/List', [
+            'boards' => $boards,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Boards/Create');

@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import Modal from './Task/Modal.vue';
 
+const modal = ref(null);
+
+const openTaskModal = () => {
+  if (modal.value) {
+    modal.value.openModal(); // Теперь это должно работать
+  }
+};
 </script>
+
 <template>
   <header class="header">
     <nav class="navbar">
       <ul class="nav-list">
         <li class="nav-item"><Link href="/projects">Проекты</Link></li>
-        <li class="nav-item"><Link href="/about">Доски</Link></li>
-        <li class="nav-item"><Link href="/task">Создать задачу</Link></li>
+        <li class="nav-item"><Link href="/boards">Доски</Link></li>
+        <li class="nav-item" @click="openTaskModal">Создать задачу</li>
+        <Modal ref="modal" />
       </ul>
     </nav>
   </header>
@@ -36,16 +47,13 @@ import { Link } from '@inertiajs/vue3'
 
 .nav-item {
   margin: 0 1.5rem; /* Отступы между элементами навигации */
-}
-
-.nav-item a {
   color: #ffffff; /* Цвет текста */
   text-decoration: none; /* Убираем подчеркивание */
   font-weight: 500; /* Полужирный шрифт */
   transition: color 0.3s; /* Плавный переход цвета */
 }
 
-.nav-item a:hover {
+.nav-item:hover {
   color: #E1F5FE; /* Цвет текста при наведении */
 }
 </style>
