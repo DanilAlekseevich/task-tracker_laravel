@@ -4,7 +4,8 @@
             <div class="header-container">
                 <h1>Доступные проекты</h1>
 
-                <Link class="create-project-button" href="/projects/create">Создать проект</Link>
+                <button class="create-project-button" @click="openCreateProjectModal">Создать проект</button>
+                <CreateProjectModal ref="modal" />
             </div>
 
             <ul>
@@ -19,10 +20,20 @@
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {Link} from '@inertiajs/vue3';
+import {ref} from "vue";
+import CreateProjectModal from "@/Components/Project/CreateProjectModal.vue";
 
 defineProps({
     projects: Array,
 });
+
+const modal = ref(null);
+
+const openCreateProjectModal = () => {
+  if (modal.value) {
+    modal.value.openCreateProjectModal(); // Теперь это должно работать
+  }
+};
 </script>
 
 <style scoped>

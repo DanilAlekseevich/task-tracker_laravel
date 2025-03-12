@@ -26,21 +26,20 @@ class ProjectController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+
         // Валидация входных данных
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
         // Создание проекта
         $project = new Project();
-        $project->name = $validatedData['name'];
+        $project->name = $validatedData['title'];
         $project->description = $validatedData['description'];
         $project->created_by = 1; // ID текущего пользователя
         $project->save();
 
-        return redirect()
-            ->route('projects.index')
-            ->with('success', 'Проект успешно создан!');
+        return redirect()->route('projects.index')->with('success', 'Проект успешно создан!');
     }
 }
