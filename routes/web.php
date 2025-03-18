@@ -35,7 +35,7 @@ Route::post('/projects', [ProjectController::class, 'store'])->name('projects.st
 Route::get('/projects/{projectId}/boards', [BoardController::class, 'index'])->name('boards.index');
 Route::get('/boards', [BoardController::class, 'list'])->name('boards.list');
 Route::get('/boards/{boardId}/columns', [BoardController::class, 'columns'])->name('boards.columns');
-Route::post('/projects/{projectId}/boards', [BoardController::class, 'store'])->name('boards.store');
+Route::post('/board/store', [BoardController::class, 'store'])->name('boards.store');
 Route::put('/boards/{boardId}', [BoardController::class, 'update'])->name('boards.update');
 Route::delete('/boards/{boardId}', [BoardController::class, 'destroy'])->name('boards.destroy');
 

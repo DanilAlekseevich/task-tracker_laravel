@@ -3,7 +3,8 @@
         <div>
             <div class="header-container">
                 <h1>Доски проекта: {{ project.name }}</h1>
-                <button class="create-board-button">Создать доску</button>
+                <button class="create-board-button" @click="openModal">Создать доску</button>
+                <CreateBoardModal ref="modal" :projectId="project.id"/>
             </div>
 
             <!-- Список досок -->
@@ -30,7 +31,16 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
+import CreateBoardModal from "@/Components/Board/CreateBoardModal.vue";
+
+const modal = ref(null);
+
+const openModal = () => {
+  if (modal.value) {
+    modal.value.openCreateBoardModal();
+  }
+};
 
 interface Project {
     name: string;

@@ -34,18 +34,19 @@ class BoardController extends Controller
         return Inertia::render('Boards/Create');
     }
 
-    public function store(Request $request, $projectId)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'project_id' => 'required|integer|exists:projects,id',
         ]);
 
         $board = new Board();
-        $board->name = $validatedData['name'];
-        $board->project_id = $projectId;
+        $board->name = $validatedData['title'];
+        $board->project_id = $validatedData['project_id'];
         $board->save();
 
-        return redirect()->route('boards.index', $projectId)
+        return redirect()->route('boards.index', $validatedData['project_id'])
             ->with('success', 'Доска успешно создана!');
     }
 
