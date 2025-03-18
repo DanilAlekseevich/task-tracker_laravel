@@ -2,7 +2,7 @@
     <AppLayout>
         <div >
             <div class="header-container">
-                <h1>Доступные проекты</h1>
+                <h1>Доступные проекты:</h1>
 
                 <button class="create-project-button" @click="openCreateProjectModal">Создать проект</button>
                 <CreateProjectModal ref="modal" />

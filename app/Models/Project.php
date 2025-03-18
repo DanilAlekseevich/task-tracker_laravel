@@ -32,4 +32,20 @@ class Project extends Model
     {
         return $this->hasMany(Board::class);
     }
+
+    public function addUser($user, $role)
+    {
+        if (is_numeric($user)) {
+            $user = User::findOrFail($user);
+        }
+        $this->users()->syncWithoutDetaching([$user->id => ['role' => $role]]);
+    }
+
+    public function removeUser($user)
+    {
+        if (is_numeric($user)) {
+            $user = User::findOrFail($user);
+        }
+        $this->users()->detach($user->id);
+    }
 }

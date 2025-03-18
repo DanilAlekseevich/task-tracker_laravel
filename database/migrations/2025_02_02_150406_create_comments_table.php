@@ -14,7 +14,15 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            // Изменяем task_id на строковый тип
+            $table->string('task_id'); // Используйте тот же тип, что и в таблице tasks
+
+            // Указываем внешний ключ вручную
+            $table->foreign('task_id')
+                  ->references('id')
+                  ->on('tasks')
+                  ->onDelete('cascade');
+
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

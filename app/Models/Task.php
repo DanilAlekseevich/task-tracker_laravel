@@ -9,8 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-        'title', 'description', 'column_id', 'created_by', 'assigned_to', 'due_date', 'priority', 'order',
-    ];
+            'title',
+            'description',
+            'column_id',
+            'created_by',
+            'assigned_to',
+            'priority',
+            'order',
+            'estimated_hours',
+            'logged_hours'
+        ];
 
     // Связи
     public function column()
