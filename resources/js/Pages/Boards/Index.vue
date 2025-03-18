@@ -11,19 +11,11 @@
             <div v-for="board in boards" :key="board.id" class="board-container">
                 <h2><Link class="board-name" :href="`/boards/${board.id}/columns`">{{ board.name }}</Link></h2>
                 <div class="board-actions">
-                    <button class="edit-button">Редактировать</button>
+                    <button class="edit-button" @click="openEditModal">Редактировать</button>
+                    <EditBoardModal ref="editModal" :board="board"/>
                     <button class="delete-button">Удалить</button>
                 </div>
             </div>
-        </div>
-
-        <div v-for="column in boards.columns" :key="column.id">
-            <h3>{{ column.name }}</h3>
-            <ul>
-                <li v-for="task in column.tasks" :key="task.id">
-                    {{ task.title }}
-                </li>
-            </ul>
         </div>
     </AppLayout>
 </template>
@@ -32,9 +24,13 @@
 import { Link } from '@inertiajs/vue3'
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { defineProps, ref } from 'vue';
+import type { Board } from "@/types/types"
+import type { Project } from "@/types/types"
 import CreateBoardModal from "@/Components/Board/CreateBoardModal.vue";
+import EditBoardModal from "@/Components/Board/EditBoardModal.vue";
 
 const modal = ref(null);
+const editModal = ref(null);
 
 const openModal = () => {
   if (modal.value) {
@@ -42,14 +38,11 @@ const openModal = () => {
   }
 };
 
-interface Project {
-    name: string;
-}
-
-interface Board {
-    id: number;
-    name: string;
-}
+const openEditModal = () => {
+  if (editModal.value) {
+    editModal.value.openEditBoardModal();
+  }
+};
 
 const props = defineProps<{
     project: Project;

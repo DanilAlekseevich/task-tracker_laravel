@@ -3,13 +3,16 @@
         <div>
             <div class="header-container">
                 <button class="create-board-button" @click="openModal">Создать доску</button>
-                <CreateBoardModal ref="modal" />
+                <CreateBoardModal ref="modal" :project-id="2"/>
             </div>
 
-            <div v-for="board in boards" :key="board.id" class="board-container">
-                <h2><Link class="board-name" :href="`/boards/${board.id}/columns`">{{ board.name }}</Link></h2>
+            <div v-for="(board, index) in boards" :key="board.id" class="board-container">
+                <h2>
+                    <Link class="board-name" :href="`/boards/${board.id}/columns`">{{ board.name }}</Link>
+                </h2>
                 <div class="board-actions">
-                    <button class="edit-button">Редактировать</button>
+                    <button class="edit-button" @click="openEditModal(index)">Редактировать</button>
+                    <EditBoardModal :ref="(el) => setEditModalRef(el, index)" :board="board"/>
                     <button class="delete-button">Удалить</button>
                 </div>
             </div>
@@ -18,23 +21,30 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import {Link} from '@inertiajs/vue3'
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {defineProps, ref} from 'vue';
 import CreateBoardModal from "@/Components/Board/CreateBoardModal.vue";
+import EditBoardModal from "@/Components/Board/EditBoardModal.vue";
+import {Board} from "@/types/types";
 
 const modal = ref(null);
+const editModal = ref([]);
 
 const openModal = () => {
-  if (modal.value) {
-    modal.value.openCreateBoardModal();
-  }
+    if (modal.value) {
+        modal.value.openCreateBoardModal();
+    }
 };
 
-interface Board {
-    id: number;
-    name: string;
-}
+const setEditModalRef = (el, index) => {
+    editModal.value[index] = el; // Сохраняем ссылку на модальное окно
+};
+const openEditModal = (index) => {
+    if (editModal.value[index]) {
+        editModal.value[index].openEditBoardModal(); // Открываем конкретное модальное окно
+    }
+};
 
 const props = defineProps<{
     boards: Board[];

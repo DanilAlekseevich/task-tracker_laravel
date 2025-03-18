@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     protected $fillable = [
-        'name', 'project_id',
+        'name', 'description', 'project_id',
     ];
 
     // Связи
