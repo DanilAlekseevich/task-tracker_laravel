@@ -1,33 +1,23 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/user', [UserController::class, 'create'])->name('user.create');
+    Route::post('/admin/user', [UserController::class, 'store'])->name('user.store');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('show.password.change');
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
@@ -42,4 +32,3 @@ Route::delete('/boards/{boardId}', [BoardController::class, 'destroy'])->name('b
 Route::post('/comment', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
-require __DIR__.'/auth.php';
