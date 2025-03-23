@@ -13,6 +13,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/user', [UserController::class, 'store'])->name('user.store');
 });
 
+Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('show.password.change');

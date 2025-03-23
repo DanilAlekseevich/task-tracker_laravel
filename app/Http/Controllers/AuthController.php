@@ -28,7 +28,7 @@ class AuthController extends Controller
                 return redirect()->route('password.change');
             }
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended('/projects');
         }
 
         return back()->withErrors([
@@ -65,10 +65,10 @@ class AuthController extends Controller
         $user->update([
             'password' => Hash::make($request->new_password),
             'force_password_change' => false,
-            'temp_password' => null, // Очищаем временный пароль
+            'tmp_password' => null, // Очищаем временный пароль
         ]);
 
-        return redirect()->route('dashboard')
+        return redirect()->route('projects.index')
             ->with('success', 'Пароль успешно изменен.');
     }
 }

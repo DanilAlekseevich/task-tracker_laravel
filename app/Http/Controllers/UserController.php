@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -46,5 +47,35 @@ final class UserController extends Controller
 
         return redirect()->back()
             ->with('success', 'Пользователь успешно создан.');
+    }
+
+    public function edit(User $user)
+    {
+        return Inertia::render('Users/Edit');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $avatarPath;
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'avatar' => $user->avatar,
+        ]);
+
+        return redirect()->back()->with('success', 'Пользователь успешно обновлен.');
     }
 }

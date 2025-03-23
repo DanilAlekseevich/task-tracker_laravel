@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'tmp_password',
+        'force_password_change',
+        'tmp_password'
     ];
 
     /**
